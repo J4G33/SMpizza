@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" class="dark:bg-gray-900 dark:text-gray-200" x-data="{ open: false, darkMode: localStorage.getItem('theme') === 'dark' }">
+<head>
+  <title>MyPizzaApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <!-- Link Tailwind CSS -->
+  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+  <!-- Ensure JavaScript Loads Before Other Scripts -->
+  <%= javascript_importmap_tags %>
+
+  <!-- Include Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-white text-gray-900 transition-colors duration-300">
+  <!-- Header with Alpine.js for dropdown menu -->
+  <header class="bg-white dark:bg-gray-800 shadow-lg transition-colors duration-300">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+      
+      <!-- Left Side: Navigation Links -->
+      <div class="hidden lg:flex lg:gap-x-12">
+        <%= link_to "About", about_path, class: "text-xl font-semibold text-gray-900 dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400" %>
+      </div>
+
+      <!-- Center: Company Logo -->
+      <a href="/" class="-m-1.5 p-1.5">
+        <span class="sr-only">My Pizza App</span>
+        <img class="h-12 w-auto" src="/assets/pizza.jpg" alt="Pizza Logo">
+      </a>
+
+      <!-- Dark Mode Toggle Button -->
+      <button @click="darkMode = !darkMode; document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', darkMode ? 'dark' : 'light')" 
+              class="ml-4 p-2 rounded-md text-gray-900 dark:text-gray-200 focus:outline-none">
+        <span class="sr-only">Toggle Dark Mode</span>
+        <svg x-show="!darkMode" class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m6.364 2.636l-1.414 1.414M21 12h-2m-6 6.364l-1.414-1.414M3 12H1m6.364 6.364l1.414-1.414M12 21v2m-6.364-6.364l-1.414-1.414M12 5a7 7 0 110 14a7 7 0 010-14z" />
+        </svg>
+        <svg x-show="darkMode" class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 0112.21 3 9 9 0 1021 12.79z" />
+        </svg>
+      </button>
+
+      <!-- Mobile Menu Button -->
+      <div class="lg:hidden">
+        <button @click="open = !open" type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-200">
+          <span class="sr-only">Open main menu</span>
+          <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Dropdown Menu (Hidden by Default) -->
+    <div class="lg:hidden" x-show="open" @click.away="open = false" x-transition>
+      <div class="bg-white dark:bg-gray-800 px-6 py-4 shadow-lg">
+        <%= link_to "About", about_path, class: "block text-xl font-semibold text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-lg" %>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="container mx-auto mt-10 px-5">
+    <%= yield %>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-6 mt-10">
+    <div class="container mx-auto text-center">
+      <p class="text-sm">© 2025 MyPizzaApp. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Debugging Test (Check Console for Output) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      console.log("✅ JavaScript is working!");
+    });
+  </script>
+</body>
+</html>
