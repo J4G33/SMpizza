@@ -36,3 +36,12 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+*.pdf
+*.png
+*.jpg
+*.jpeg
+Visual Studio Code.app
+*.app
+TaxReturn_*
+Screenshot*
