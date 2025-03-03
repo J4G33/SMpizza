@@ -7,7 +7,7 @@
   <%= csp_meta_tag %>
 
   <!-- Link Tailwind CSS -->
-  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
   <!-- Ensure JavaScript Loads Before Other Scripts -->
@@ -15,6 +15,7 @@
 
   <!-- Include Alpine.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <%= javascript_importmap_tags %>
 </head>
 <body class="bg-white text-gray-900 transition-colors duration-300">
   <!-- Header with Alpine.js for dropdown menu -->
@@ -71,7 +72,7 @@
   <!-- Footer -->
   <footer class="bg-gray-900 text-white py-6 mt-10">
     <div class="container mx-auto text-center">
-      <p class="text-sm">© 2025 MyPizzaApp. All rights reserved.</p>
+      <p class="text-sm">© 2025 StrongMind Pizza. All Rights Reserved.</p>
     </div>
   </footer>
 
@@ -79,6 +80,47 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       console.log("✅ JavaScript is working!");
+    });
+  </script>
+
+  <!-- JavaScript for Manage Toppings Interactivity (Step 2) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Alpine.data('toppings', () => ({
+        init() {
+          this.$watch('toppingName', (value) => {
+            // Check for duplicates before submitting (AJAX call to Rails backend)
+            fetch('/toppings/check_duplicate?name=' + encodeURIComponent(value))
+              .then(response => response.json())
+              .then(data => {
+                if (data.exists) {
+                  alert('This topping already exists!');
+                  this.$refs.toppingName.value = '';
+                }
+              });
+          });
+        },
+        editTopping(event) {
+          const id = event.target.dataset.toppingId;
+          fetch(`/toppings/${id}/edit`)
+            .then(response => response.json())
+            .then(data => {
+              this.$refs.toppingName.value = data.name;
+              // Update form action or hidden field for editing
+            });
+        },
+        deleteTopping(event) {
+          if (confirm('Are you sure you want to delete this topping?')) {
+            const id = event.target.dataset.toppingId;
+            fetch(`/toppings/${id}`, { method: 'DELETE' })
+              .then(() => window.location.reload()); // Refresh the page or update via Turbo
+          }
+        },
+        cancelEdit() {
+          this.$refs.toppingName.value = '';
+          // Reset form for new topping
+        }
+      }));
     });
   </script>
 </body>

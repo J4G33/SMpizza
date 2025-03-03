@@ -1,0 +1,65 @@
+<!-- app/views/home/_pricing.html.erb or app/views/home/index.html.erb -->
+<div class="container mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+  <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Cheese Pizza $8.00</h2>
+
+  <!-- Form to Add/Edit Topping -->
+  <div class="mb-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+    <form id="toppingForm" data-controller="toppings" class="space-y-4">
+      <div>
+        <label for="topping_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Topping Name
+        </label>
+        <input type="text" id="topping_name" name="topping[name]" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-600 dark:border-gray-500 dark:text-white" required>
+      </div>
+      
+      <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <%= @topping&.persisted? ? 'Update Topping' : 'Add Topping' %>
+      </button>
+      
+      <% if @topping&.persisted? %>
+        <button type="button" data-action="click->toppings#cancelEdit" class="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+          Cancel
+        </button>
+      <% end %>
+    </form>
+  </div>
+
+  <!-- List of Toppings -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+      <thead class="bg-gray-50 dark:bg-gray-600">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+            Topping Name
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+        <% @toppings.each do |topping| %>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+              <%= topping.name %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <button data-action="click->toppings#editTopping" data-topping-id="<%= topping.id %>" class="text-indigo-600 hover:text-indigo-900">
+                Edit
+              </button>
+              <button data-action="click->toppings#deleteTopping" data-topping-id="<%= topping.id %>" class="ml-2 text-red-600 hover:text-red-900">
+                Delete
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Error/Success Messages -->
+  <div id="toppingMessages" class="mt-4 text-sm text-red-600 dark:text-red-400">
+    <%= flash[:error] if flash[:error] %>
+    <%= flash[:notice] if flash[:notice] %>
+  </div>
+</div>

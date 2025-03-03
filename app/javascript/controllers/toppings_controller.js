@@ -1,0 +1,1 @@
+pin "toppings_controller", to: "controllers/toppings_controller.js"
