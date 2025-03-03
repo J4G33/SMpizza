@@ -17,10 +17,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Disable cache for this run
-        run: echo "CI cache disabled for this run"
+          bundler-cache: false  # Disable cache to prevent 409 conflict error
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
@@ -38,13 +35,12 @@ jobs:
           bundler-cache: true
 
       - name: Lint code for consistent style
-        run: bundle exec rubocop -f github
+        run: bin/rubocop -f github
 
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Install packages
+      - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips sqlite3
 
       - name: Checkout code
@@ -59,7 +55,7 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-        run: bundle exec rails db:test:prepare test test:system
+        run: bin/rails db:test:prepare && bin/rails test test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
@@ -68,4 +64,5 @@ jobs:
           name: screenshots
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
+
 
