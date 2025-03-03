@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Add route for the About page with a named helper
-  get '/about', to: 'pages#about', as: :about
+  get "/about", to: "pages#about", as: :about
 end
