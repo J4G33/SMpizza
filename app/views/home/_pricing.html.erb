@@ -3,7 +3,7 @@
     <div class="lg:grid lg:grid-cols-12 lg:gap-x-8">
       <div class="lg:col-span-5 lg:col-start-8">
         <div class="flex justify-between">
-          <h1 class="text-xl font-medium text-gray-900">Cheese</h1>
+          <h1 class="text-xl font-medium text-gray-900">Limited Offer</h1>
           <p class="text-xl font-medium text-gray-900">$12.99</p>
         </div>
         <div class="mt-4">
@@ -25,33 +25,34 @@
       <div class="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
         <h2 class="sr-only">Images</h2>
         <div class="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
-<%= image_tag "cheese.jpg", alt: "Delicious cheese pizza", class: "rounded-lg lg:col-span-2 lg:row-span-2" %>         
+          <!-- Update the initial image to cheese.jpg and add data-pizza_type -->
+          <%= image_tag "cheese.jpg", alt: "Delicious cheese pizza", class: "rounded-lg lg:col-span-2 lg:row-span-2", id: "pizza-image", data: { pizza_type: "cheese" } %>
         </div>
       </div>
 
       <div class="mt-8 lg:col-span-5">
         <form>
           <div>
-            <h2 class="text-md font-medium text-gray-900">Cheese, Pepp, Combo </h2>
+            <h2 class="text-md font-medium text-gray-900">Cheese, Pepp, Combo</h2>
             <fieldset aria-label="Choose a color" class="mt-2">
-  <div class="flex items-center gap-x-3">
-    <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-yellow-500">
-      <input type="radio" name="color-choice" value="Yellow" class="sr-only">
-      <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-yellow-500"></span>
-    </label>
-    <br>
-    <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-red-500">
-      <input type="radio" name="color-choice" value="Red" class="sr-only">
-      <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-red-500"></span>
-    </label>
-    <br>
-    <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-green-500">
-      <input type="radio" name="color-choice" value="Green" class="sr-only">
-      <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-green-500"></span>
-    </label>
-  </div>
-</fieldset>
-
+              <div class="flex items-center gap-x-3">
+                <!-- Yellow dot for Cheese (cheese.jpg) -->
+                <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-yellow-500" data-pizza="cheese">
+                  <input type="radio" name="color-choice" value="Yellow" class="sr-only" data-action="click->pizza#updatePizza">
+                  <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-yellow-500"></span>
+                </label>
+                <!-- Red dot for Pepperoni (pep.jpg) -->
+                <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-red-500" data-pizza="pepperoni">
+                  <input type="radio" name="color-choice" value="Red" class="sr-only" data-action="click->pizza#updatePizza">
+                  <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-red-500"></span>
+                </label>
+                <!-- Green dot for Combo (combo.jpg) -->
+                <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-green-500" data-pizza="combo">
+                  <input type="radio" name="color-choice" value="Green" class="sr-only" data-action="click->pizza#updatePizza">
+                  <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-green-500"></span>
+                </label>
+              </div>
+            </fieldset>
           </div>
 
           <div class="mt-8">
@@ -81,13 +82,14 @@
         <div class="mt-10">
           <h2 class="text-sm font-medium text-gray-900">Description</h2>
           <div class="mt-4 space-y-4 text-sm text-gray-500">
-            <p>Indulge in the irresistible allure of our Cheese Pizza. A golden, crispy crust baked to perfection, smothered in a rich, 
-            tangy tomato sauce, and blanketed with a luscious layer of gooey, melted mozzarella. Each bite delivers a symphony of savory, 
-            cheesy goodness, with a hint of aromatic herbs that dance on your palate, leaving you craving just one more slice.</p>
+            <p>Indulge in the irresistible allure of our pizzas. A golden, 
+            crispy crust baked to perfection, smothered in rich, tangy tomato sauce, and blanketed with gooey, melted mozzarella.</p>
+          <p>Cheese: A classic delight, delivering pure, savory cheesiness with a hint of aromatic herbs.
+<p>Pepperoni: Topped with bold, zesty pepperoni that adds a satisfying kick to every bite.</p>
+<p>Combo: A flavor-packed masterpiece with a perfect balance of cheese, pepperoni, and extra toppings for the ultimate pizza experience.</p>
+<p>No matter your choice, each slice is a bite of perfection, leaving you craving just one more.</p>
           </div>
         </div>
-
-       
       </div>
     </div>
   </div>
