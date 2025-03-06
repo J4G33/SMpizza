@@ -7,6 +7,14 @@ module.exports = {
     './app/views/**/*.{erb,haml,html,slim}'
   ],
   theme: {
+    theme: {
+      extend: {
+        fontSize: {
+          'xs': '0.75rem', // Smaller than default 'xs'
+          'sm': '0.875rem', // Smaller than default 'sm'
+        },
+      },
+    },
     extend: {},
   },
   plugins: [],

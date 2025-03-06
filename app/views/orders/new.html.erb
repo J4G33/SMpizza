@@ -1,0 +1,195 @@
+<head>
+<style>
+/* Adjust layout for small screens */
+@media (max-width: 768px) {
+  .lg\:grid {
+    display: block !important;
+  }
+
+  .lg\:grid-cols-3, .xl\:grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Ensure form and checkboxes are visible */
+  .hidden.lg\:block {
+    display: block !important;
+  }
+
+  /* Adjust button layout */
+  .flex.space-x-4 {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .w-1/2 {
+    width: 100%;
+  }
+
+  /* Adjust padding for better spacing */
+  main {
+    padding: 10px !important;
+  }
+}
+</style>
+</head>
+
+<div class="bg-white">
+  <div>
+    <main class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <div class="border-b border-gray-200 pb-10">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900">Pizza Order</h1>
+      </div>
+
+      <div class="pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+        <aside>
+          <h2 class="sr-only">Filters</h2>
+
+          <div class="hidden lg:block">
+            <form id="pizzaForm" class="divide-y divide-gray-200">
+              
+              <!-- PEPPERONI SECTION -->
+              <div class="py-10 first:pt-0 last:pb-0">
+                <fieldset>
+                  <legend class="block text-sm font-medium text-gray-900 flex items-center gap-3">
+                    <input id="pepperoni-main" type="checkbox" onclick="toggleToppings('pepperoni-main', 'pepperoni[]')">
+                    PEPPERONI
+                  </legend>
+                  <div class="space-y-3 pt-6">
+                    <div class="flex gap-3">
+                      <input id="pepperoni-0" name="pepperoni[]" value="cheese" type="checkbox">
+                      <label for="pepperoni-0">Cheese</label>
+                    </div>
+                    <div class="flex gap-3">
+                      <input id="pepperoni-1" name="pepperoni[]" value="pepperoni" type="checkbox">
+                      <label for="pepperoni-1">Pepperoni</label>
+                    </div>
+                    <div class="flex gap-3">
+                      <input id="pepperoni-2" name="pepperoni[]" value="sauce" type="checkbox">
+                      <label for="pepperoni-2">Sauce</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+
+              <!-- COMBO SECTION -->
+              <div class="py-10 first:pt-0 last:pb-0">
+                <fieldset>
+                  <legend class="block text-sm font-medium text-gray-900 flex items-center gap-3">
+                    <input id="combo-main" type="checkbox" onclick="toggleToppings('combo-main', 'combo[]')">
+                    COMBO
+                  </legend>
+                  <div class="space-y-3 pt-6">
+                    <div class="flex gap-3">
+                      <input id="combo-0" name="combo[]" value="pepperoni" type="checkbox">
+                      <label for="combo-0">Pepperoni</label>
+                    </div>
+                    <div class="flex gap-3">
+                      <input id="combo-1" name="combo[]" value="cheese" type="checkbox">
+                      <label for="combo-1">Cheese</label>
+                    </div>
+                    <div class="flex gap-3">
+                      <input id="combo-2" name="combo[]" value="peppers" type="checkbox">
+                      <label for="combo-2">Peppers</label>
+                    </div>
+                    <div class="flex gap-3">
+                      <input id="combo-3" name="combo[]" value="ham" type="checkbox">
+                      <label for="combo-3">Ham</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+
+              <!-- SIZES SECTION -->
+              <div class="py-10 first:pt-0 last:pb-0">
+                <fieldset>
+                  <legend class="block text-sm font-medium text-gray-900">Sizes</legend>
+                  <div class="space-y-3 pt-6">
+                    <div class="flex gap-3">
+                      <input id="size-0" name="size[]" value="m" type="checkbox">
+                      <label for="size-0">M</label>
+                    </div>
+                    <div class="flex gap-3">
+                      <input id="size-1" name="size[]" value="l" type="checkbox">
+                      <label for="size-1">L</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+
+            </form>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="flex space-x-4 mt-6">
+    <button id="removeBtn" type="button" class="w-1/2 bg-white text-black font-bold py-2 px-4 rounded border border-red-600 hover:bg-red-600 hover:text-white" 
+      onclick="clearSelections()">
+      Remove
+    </button>
+    <button id="orderBtn" type="button" class="w-1/2 bg-white text-black font-bold py-2 px-4 rounded border border-red-600 hover:bg-red-600 hover:text-white" 
+      onclick="placeOrder()">
+      Place Order
+    </button>
+  </div>
+</div>
+
+<!-- JAVASCRIPT FUNCTIONS -->
+<script>
+  // Toggle all checkboxes when the main category is clicked
+  function toggleToppings(mainCheckboxId, groupName) {
+    const mainCheckbox = document.getElementById(mainCheckboxId);
+    const checkboxes = document.querySelectorAll(`input[name="${groupName}"]`);
+
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = mainCheckbox.checked;
+    });
+  }
+
+  // Remove all checkmarks when "Remove" button is clicked
+  function clearSelections() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = false;
+    });
+
+    // Add feedback to the button
+    const removeBtn = document.getElementById("removeBtn");
+    removeBtn.style.backgroundColor = "#FCA5A5"; // Light red
+    setTimeout(() => {
+      removeBtn.style.backgroundColor = ""; // Reset
+    }, 1000);
+  }
+
+  // Send selected order data to the backend when "Place Order" is clicked
+  function placeOrder() {
+    const selectedToppings = [];
+    document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+      if (checkbox.name && checkbox.value) {
+        selectedToppings.push({ name: checkbox.name, value: checkbox.value });
+      }
+    });
+
+    console.log("Order placed:", selectedToppings);
+
+    const orderBtn = document.getElementById("orderBtn");
+    orderBtn.style.backgroundColor = "#FCA5A5"; // Light red
+    setTimeout(() => {
+      orderBtn.style.backgroundColor = ""; // Reset
+    }, 1000);
+  }
+
+   // Example: If you were sending this to an API
+    /*
+    fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order: selectedToppings })
+    })
+    .then(response => response.json())
+    .then(data => console.log('Order confirmed:', data))
+    .catch(error => console.error('Error:', error));
+    */
+</script>

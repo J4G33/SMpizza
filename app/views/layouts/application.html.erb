@@ -7,15 +7,14 @@
   <%= csp_meta_tag %>
 
   <!-- Link Tailwind CSS -->
-<%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
   <!-- Ensure JavaScript Loads Before Other Scripts -->
   <%= javascript_importmap_tags %>
 
-  <!-- Include Alpine.js -->
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>   
 </head>
+
 <body class="bg-white text-gray-900 transition-colors duration-300">
   <!-- Header with Alpine.js for dropdown menu -->
   <header class="bg-white dark:bg-gray-800 shadow-lg transition-colors duration-300">
@@ -29,20 +28,10 @@
       <!-- Center: Company Logo -->
       <a href="/" class="-m-1.5 p-1.5">
         <span class="sr-only">My Pizza App</span>
-        <img class="h-12 w-auto" src="/assets/pizza.jpg" alt="Pizza Logo">
+        <img class="h-12 w-auto" src="<%= asset_path('pizza.jpg') %>" alt="Pizza Logo">
       </a>
 
-      <!-- Dark Mode Toggle Button -->
-      <button @click="darkMode = !darkMode; document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', darkMode ? 'dark' : 'light')" 
-              class="ml-4 p-2 rounded-md text-gray-900 dark:text-gray-200 focus:outline-none">
-        <span class="sr-only">Toggle Dark Mode</span>
-        <svg x-show="!darkMode" class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m6.364 2.636l-1.414 1.414M21 12h-2m-6 6.364l-1.414-1.414M3 12H1m6.364 6.364l1.414-1.414M12 21v2m-6.364-6.364l-1.414-1.414M12 5a7 7 0 110 14a7 7 0 010-14z" />
-        </svg>
-        <svg x-show="darkMode" class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 0112.21 3 9 9 0 1021 12.79z" />
-        </svg>
-      </button>
+    
 
       <!-- Mobile Menu Button -->
       <div class="lg:hidden">
@@ -82,13 +71,12 @@
     });
   </script>
 
-  <!-- JavaScript for Manage Toppings Interactivity (Step 2) -->
+  <!-- JavaScript for Manage Toppings Interactivity -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       Alpine.data('toppings', () => ({
         init() {
           this.$watch('toppingName', (value) => {
-            // Check for duplicates before submitting (AJAX call to Rails backend)
             fetch('/toppings/check_duplicate?name=' + encodeURIComponent(value))
               .then(response => response.json())
               .then(data => {
@@ -105,22 +93,21 @@
             .then(response => response.json())
             .then(data => {
               this.$refs.toppingName.value = data.name;
-              // Update form action or hidden field for editing
             });
         },
         deleteTopping(event) {
           if (confirm('Are you sure you want to delete this topping?')) {
             const id = event.target.dataset.toppingId;
             fetch(`/toppings/${id}`, { method: 'DELETE' })
-              .then(() => window.location.reload()); // Refresh the page or update via Turbo
+              .then(() => window.location.reload());
           }
         },
         cancelEdit() {
           this.$refs.toppingName.value = '';
-          // Reset form for new topping
         }
       }));
     });
   </script>
+
 </body>
 </html>
