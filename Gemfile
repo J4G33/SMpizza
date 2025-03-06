@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "rails", "> 7.2.2", "<= 7.2.2.1"
-gem "sqlite3", "~> 1.4"
+gem "sqlite3", "~> 2.6.0"
 gem "puma", "~> 6.0"  # Updated to ensure compatibility with Rack 3
 gem "rack", ">= 3.0.0"  # Added to ensure Rack 3.x is used
 gem "importmap-rails"
