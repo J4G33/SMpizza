@@ -14,7 +14,9 @@ group :development, :test do
   gem "brakeman", require: false
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
+  gem "rubocop-rails-omakase", require: false
 end
+
 
 group :development do
   gem "web-console", "> 4.2", platforms: [ :ruby ]
