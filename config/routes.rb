@@ -30,5 +30,3 @@ Rails.application.routes.draw do
   get "/order", to: "orders#new"
   post "/order", to: "orders#create"  # Ensure this is included
 end
-
-
