@@ -1,28 +1,34 @@
 Rails.application.routes.draw do
+  # Orders routes
   get "orders/new", to: "orders#new"
-  post "orders", to: "orders#create"  # This adds the missing POST route for order creation
+  post "orders", to: "orders#create"  # Add this missing route
 
-  root "home#index"  # Set home#index as the homepage
+  # Set home#index as the homepage
+  root "home#index"
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Health check route
   get "/up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/*
+  # Render dynamic PWA files
   get "service_worker" => "rails/pwa/service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa/manifest", as: :pwa_manifest
 
-  # Add route for the About page with a named helper
+  # About Page
   get "/about", to: "pages#about", as: :about
 
-  # Add routes for toppings management (from application.html.erb JavaScript)
-  get "/toppings/check_duplicate" => "toppings#check_duplicate"
-  get "/toppings/:id/edit" => "toppings#edit", as: :edit_topping
+  # Toppings management routes
+  get "/toppings/check_duplicate", to: "toppings#check_duplicate"
+  get "/toppings/:id/edit", to: "toppings#edit", as: :edit_topping
 
-  # Add route for pizza toppings
-  get "/pizzas/:type/toppings" => "pizzas#toppings", as: :pizza_toppings
+  # Pizza toppings route
+  get "/pizzas/:type/toppings", to: "pizzas#toppings", as: :pizza_toppings
 
-  # Add route for cart (if not already present)
+  # Cart route (if applicable)
   get "/cart", to: "carts#show", as: :cart
 
+  # Order page
   get "/order", to: "orders#new"
+  post "/order", to: "orders#create"  # Ensure this is included
 end
+
+

@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_02_220813) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_06_013542) do
+  create_table "orders", force: :cascade do |t|
+    t.string "name"
+    t.string "size"
+    t.text "toppings"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "toppings", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
