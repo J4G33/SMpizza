@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" class="dark:bg-gray-900 dark:text-gray-200" x-data="{ open: false, darkMode: localStorage.getItem('theme') === 'dark' }">
 <head>
   <title>MyPizzaApp</title>
@@ -8,12 +8,16 @@
 
   <!-- Link Tailwind CSS -->
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
   <!-- Ensure JavaScript Loads Before Other Scripts -->
   <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
 </head>
+
 
 <body class="bg-white text-gray-900 transition-colors duration-300">
   <!-- Header with Alpine.js for dropdown menu -->
@@ -67,7 +71,7 @@
   <!-- Debugging Test (Check Console for Output) -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      console.log("✅ JavaScript is working!");
+      console.log("✅ JavaScript better work!");
     });
   </script>
 

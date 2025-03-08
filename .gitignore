@@ -45,3 +45,5 @@ Visual Studio Code.app
 *.app
 TaxReturn_*
 Screenshot*
+
+/node_modules
