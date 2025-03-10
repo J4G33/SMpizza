@@ -42,7 +42,7 @@ jobs:
       - name: Lint code for consistent style
         run: bundle exec rubocop -f github
 
-  test:  # ✅ This needs to be correctly aligned under "jobs"
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Install dependencies
@@ -69,7 +69,7 @@ jobs:
         run: npm install -g tailwindcss
 
       - name: Build Tailwind CSS
-        run: bin/rails tailwind:build || npx tailwindcss -i app/assets/stylesheets/application.css -o app/assets/builds/application.css
+        run: bin/rails tailwindcss:build || npx tailwindcss -i app/assets/stylesheets/application.tailwind.css -o app/assets/builds/application.css
 
       - name: Run tests
         env:
