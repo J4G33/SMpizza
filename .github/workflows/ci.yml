@@ -57,7 +57,7 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install Dependencies
+      - name: Install Ruby Dependencies
         run: bundle install
 
       - name: Set up Node.js
@@ -73,16 +73,14 @@ jobs:
 
       - name: Install Yarn
         run: npm install -g yarn || echo "Yarn already installed"
-        
 
       - name: Install JS Dependencies
         run: yarn install
 
-      - name: Install Tailwind CSS CLI
-        run: npm install -g tailwindcss
-
-      - name: Build Tailwind CSS
-        run: bin/rails tailwindcss:build || npx tailwindcss -i app/assets/stylesheets/application.css -o app/assets/builds/application.css
+      - name: Debug File Existence
+        run: |
+          ls -la app/assets/stylesheets/
+          cat app/assets/stylesheets/application.css || echo "application.css not found"
 
       - name: Run tests
         env:

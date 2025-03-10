@@ -12,7 +12,7 @@ gem "bootsnap", require: false
 
 group :development, :test do
   gem "sqlite3", "~> 1.4" # ✅ Added SQLite3 for development & testing
-  gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
+  gem "debug", platforms: %i[mri mswin mswin64 mingw x64_mingw], require: "debug/prelude"
   gem "brakeman", require: false
   gem "rubocop", require: false
   gem "rubocop-rails-omakase", require: false
@@ -33,5 +33,3 @@ end
 
 gem "tailwindcss-rails", "~> 2.0"
 gem "cssbundling-rails", "~> 1.4"
-
-
