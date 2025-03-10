@@ -60,6 +60,19 @@ jobs:
       - name: Install Dependencies
         run: bundle install
 
+      # ✅ New: Install Node.js (needed for Tailwind)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Tailwind CSS CLI
+        run: npm install -g tailwindcss
+
+      # ✅ New: Build Tailwind CSS before running tests
+      - name: Build Tailwind CSS
+        run: bin/rails tailwind:build
+
       - name: Run tests
         env:
           RAILS_ENV: test
@@ -72,3 +85,4 @@ jobs:
           name: screenshots
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
+
