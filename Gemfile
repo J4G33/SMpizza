@@ -33,3 +33,4 @@ end
 
 gem "tailwindcss-rails", "~> 2.0"
 gem "cssbundling-rails", "~> 1.4"
+ruby "3.2.5"
