@@ -16,10 +16,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          bundler-cache: false  # Disable cache to prevent 409 conflict error
+          bundler-cache: false
 
       - name: Install Dependencies
-        run: bundle install  # Ensure all gems are installed
+        run: bundle install
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
@@ -37,53 +37,49 @@ jobs:
           bundler-cache: true
 
       - name: Install Dependencies
-        run: bundle install  # Ensure rubocop is installed
+        run: bundle install
 
       - name: Lint code for consistent style
         run: bundle exec rubocop -f github
 
-        test:
-          runs-on: ubuntu-latest
-          steps:
-            - name: Install dependencies
-              run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips sqlite3
-      
-            - name: Checkout code
-              uses: actions/checkout@v4
-      
-            - name: Set up Ruby
-              uses: ruby/setup-ruby@v1
-              with:
-                ruby-version: .ruby-version
-                bundler-cache: true
-      
-            - name: Install Dependencies
-              run: bundle install
-      
-            - name: Ensure Node.js is installed (needed for Tailwind)
-              uses: actions/setup-node@v3
-              with:
-                node-version: 18
-      
-            - name: Install Tailwind CSS CLI
-              run: npm install -g tailwindcss postcss autoprefixer
-      
-            - name: Verify Tailwind Installation
-              run: npx tailwindcss -v  # This checks if Tailwind is properly installed
-      
-            - name: Build Tailwind CSS
-              run: bin/rails tailwindcss:build || npx tailwindcss -i app/assets/stylesheets/application.css -o app/assets/builds/application.css
-      
-            - name: Run tests
-              env:
-                RAILS_ENV: test
-              run: bin/rails db:test:prepare && bin/rails test test:system
-      
-            - name: Keep screenshots from failed system tests
-              uses: actions/upload-artifact@v4
-              if: failure()
-              with:
-                name: screenshots
-                path: ${{ github.workspace }}/tmp/screenshots
-                if-no-files-found: ignore
-      
+  test:  # ✅ This needs to be correctly aligned under "jobs"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips sqlite3
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Install Dependencies
+        run: bundle install
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Tailwind CSS CLI
+        run: npm install -g tailwindcss
+
+      - name: Build Tailwind CSS
+        run: bin/rails tailwind:build || npx tailwindcss -i app/assets/stylesheets/application.css -o app/assets/builds/application.css
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+        run: bin/rails db:test:prepare && bin/rails test test:system
+
+      - name: Keep screenshots from failed system tests
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: screenshots
+          path: ${{ github.workspace }}/tmp/screenshots
+          if-no-files-found: ignore
