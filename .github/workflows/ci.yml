@@ -72,7 +72,8 @@ jobs:
           yarn --version
 
       - name: Install Yarn
-        run: npm install -g yarn
+        run: npm install -g yarn || echo "Yarn already installed"
+        
 
       - name: Install JS Dependencies
         run: yarn install
