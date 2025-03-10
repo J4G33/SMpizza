@@ -45,7 +45,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install dependencies
+      - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips sqlite3
 
       - name: Checkout code
@@ -65,11 +65,23 @@ jobs:
         with:
           node-version: 18
 
+      - name: Enable Corepack and Set Yarn Version
+        run: |
+          corepack enable
+          corepack prepare yarn@4.5.0 --activate
+          yarn --version
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install JS Dependencies
+        run: yarn install
+
       - name: Install Tailwind CSS CLI
         run: npm install -g tailwindcss
 
       - name: Build Tailwind CSS
-        run: bin/rails tailwindcss:build || npx tailwindcss -i app/assets/stylesheets/application.tailwind.css -o app/assets/builds/application.css
+        run: bin/rails tailwindcss:build || npx tailwindcss -i app/assets/stylesheets/application.css -o app/assets/builds/application.css
 
       - name: Run tests
         env:
