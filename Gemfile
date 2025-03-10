@@ -19,7 +19,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "web-console", "~> 4.2", platforms: [:ruby]
+  gem "web-console", "~> 4.2", platforms: [ :ruby ]
 end
 
 group :test do
