@@ -4,8 +4,7 @@
   "private": true,
   "engines": {
     "node": "20.x",
-    "yarn": "1.22.x",
-    "npm": "10.x"
+    "yarn": "1.22.x"
   },
   "scripts": {
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify"
