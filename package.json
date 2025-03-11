@@ -2,19 +2,16 @@
   "name": "SMpizza",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "yarn@4.5.0",
   "engines": {
     "node": "20.x",
-    "yarn": "1.22.x"
+    "npm": "10.x"
   },
   "scripts": {
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify"
   },
   "dependencies": {
     "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3"
-  },
-  "devDependencies": {
+    "postcss": "^8.5.3",
     "tailwindcss": "^4.0.12"
   }
 }
