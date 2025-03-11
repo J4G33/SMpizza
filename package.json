@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "yarn@4.5.0",
+  "engines": {
+    "node": "20.x",
+    "yarn": "1.22.x"
+  },
   "scripts": {
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify"
   },
