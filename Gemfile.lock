@@ -339,5 +339,8 @@ DEPENDENCIES
   turbo-rails (~> 2.0)
   web-console (~> 4.2)
 
+RUBY VERSION
+   ruby 3.2.5p208
+
 BUNDLED WITH
    2.6.5
