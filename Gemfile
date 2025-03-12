@@ -17,7 +17,7 @@ group :development, :test do
   gem "brakeman", require: false
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
-  gem "rspec-rails", "~> 6.0"  # Ensure RSpec is included
+  gem "rspec-rails", "~> 7.1"  # Ensure RSpec is included
 end
 
 # Use PostgreSQL for production
